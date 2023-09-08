@@ -39,7 +39,6 @@ class EmployeeServiceImplTest {
         String expectedMessage = "Сотрудник уже существует";
         Exception exception = assertThrows(EmployeeAlreadyAddedException.class, () -> employeeService
                 .addEmployee(name, surname, middlename, department, salary));
-
         assertEquals(expectedMessage, exception.getMessage());
     }
 
@@ -55,7 +54,6 @@ class EmployeeServiceImplTest {
 
         Exception exception = assertThrows(EmployeeStorageIsFullException.class, () -> employeeService
                 .addEmployee(name, surname, middleName, department, salary));
-
         assertEquals(expectedMessage, exception.getMessage());
     }
 
@@ -93,7 +91,6 @@ class EmployeeServiceImplTest {
         String expectedMessage = "Сотрудник не найден";
         Exception exception = assertThrows(EmployeeNotFoundException.class, () -> employeeService
                 .findEmployee(name, surname, surname, department, salary));
-
         assertEquals(expectedMessage, exception.getMessage());
     }
 }

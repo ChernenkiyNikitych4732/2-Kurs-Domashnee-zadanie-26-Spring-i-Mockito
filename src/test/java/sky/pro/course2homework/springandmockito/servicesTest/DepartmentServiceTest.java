@@ -35,13 +35,10 @@ class DepartmentServiceTest {
     @Test
     void employeeWithMinSalary_Success() {
         int department = DEPARTMENT_ONE;
-
-
         Employee expected = getIvanDepOne();
         Employee ivanDepOne = getIvanDepOne();
         Employee vadimDepOne = getVadimDepOne();
         Employee makarDepTwo =getMakarDeptwo();
-
         Mockito.when(employeeService.aListOfEmployees())
                 .thenReturn(List.of(ivanDepOne,vadimDepOne,makarDepTwo));
         Employee actual = departmentService.employeeWithMinSalary(department);
@@ -55,7 +52,17 @@ class DepartmentServiceTest {
     void employeeWithMinSalary_EmployeeNotFoundException() {
         int department = DEPARTMENT_ONE;
         String expectedMessage = "Сотрудник с минимальной зарплатой не найден";
-
+        Employee expected = getIvanDepOne();
+        Employee ivanDepOne = getIvanDepOne();
+        Employee vadimDepOne = getVadimDepOne();
+        Employee makarDepTwo = getMakarDeptwo();
+        Mockito.when(employeeService.aListOfEmployees())
+                .thenReturn(List.of(ivanDepOne,vadimDepOne,makarDepTwo));
+        Employee actual = departmentService.employeeWithMinSalary(department);
+        assertEquals(expected, actual);
+        assertEquals(department, actual.getDepartment());
+        assertFalse(ivanDepOne.getSalary() <ivanDepOne.getSalary());
+        verify(employeeService).aListOfEmployees();
     }
 
     @Test
@@ -65,7 +72,6 @@ class DepartmentServiceTest {
         Employee ivanDepOne = getIvanDepOne();
         Employee vadimDepOne = getVadimDepOne();
         Employee makarDepTwo = getMakarDeptwo();
-
         Mockito.when(employeeService.aListOfEmployees())
                 .thenReturn(List.of(ivanDepOne,vadimDepOne, makarDepTwo));
         Employee actual = departmentService.employeeWithMaxSalary(department);
@@ -79,7 +85,6 @@ class DepartmentServiceTest {
     void employeeWithMaxSalary_EmployeeNotFoundException() {
         int department = DEPARTMENT_ONE;
         String expectedMessage = "Сотрудник с максимальной зарплатой не найден";
-
         Exception exception = assertThrows(EmployeeNotFoundException.class, () -> departmentService.employeeWithMaxSalary(department));
         assertEquals(expectedMessage, exception.getMessage());
         verify(employeeService).aListOfEmployees();
